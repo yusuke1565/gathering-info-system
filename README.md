@@ -20,18 +20,20 @@
 python 3.8.5以上<br>
 Flask 2.0.0以上<br>
 pyenchant 3.1.1以上<br><br>
-`pip install -r request/requirement.txt`
+```python
+pip install -r request/requirement.txt
+```
 でpython以外は、まとめてインストールできる。
 
 ### 実行
-"""python:/evaluation-system
+```python:/evaluation-system
 $ python3 app.py
-"""
+```
 と打ち込み、`Running on http://127.0.0.1:5000/`と表示されれば実行完了である。そして、[http://127.0.0.1:5000/](http://127.0.0.1:5000)にアクセスすると、./indexに飛ぶ。もしポート（:5000）が既に使用中の場合は、app.pyの一番下の`app.run`の、`port="5000"`の値を適当に変えてほしい。<br>
 　今の設定では、外部からこのシステムにアクセスできない。もし、実行中のハード以外からのアクセスを許可する場合は、app.pyの`app.run`を、
-"""python:app.py
+```python:app.py
 app.run(host="0.0.0.0", port="<適当な値>")
-"""
+```
 と書き換えると、外部からもアクセスできるようになる。またこの場合のURLは、`http://<実行中のPCの、wifiのIPv4アドレス>:<設定したポート番号>`となる。アクセスできる端末は、同じwifiにつながっている必要がある。
 
 ### /index
