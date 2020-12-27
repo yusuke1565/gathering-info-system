@@ -48,8 +48,6 @@ app.run(host="0.0.0.0", port="<適当な値>")
 　`./index`で"例題へ"を押すと、`./ex/<Phase>`に飛ぶ。<Phase>とは、このシステムの状態を6段階（one～five +end)で表したものである（例：./ex/two）。<Phase>の詳しい事については、後ほど記す。`./ex/...`は例題を出題している時を表す。
 
 ### ./<userID>/<Phase>/<Nunmber of problems>
- `./ready または ./input_userID`で"開始"ボタンを押すと、`./<userID>/<Phase>/<Number of problems>に飛ぶ。<userID>は、0や19といったユーザIDである。<Number of problems>は、何問目かを表す数字である。ここでは、実際に問題を出題し、情報を収集するところである。
-***
+ `./ready または ./input_userID`で"開始"ボタンを押すと、`./<userID>/<phase>/<Number of problems>に飛ぶ。<userID>は、0や19といったユーザIDである。<Number of problems>は、何問目かを表す数字である。ここでは、実際に問題を出題し、情報を収集するところである。
 
 ## Phase
-　ここからは

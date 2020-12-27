@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="/../static/style.css">
+<meta name="viewport" content="width=device-width.initial^scale=1">
+<meta charset="UTF-8">
+<title>解説文生成評価用の情報収集フォーム</title>
+</head>
+<body>
+	<h5>※左上の戻るボタンは押さないでください。</h5>
+	{% autoescape false %}
+	<h3>{{num}}： {{english}}　({{p_id}})</h3>
+	{% endautoescape %}
+	<div><p class="commentary">解説：{{commentary}}</p></div>
+	<br><hr class="a">
+	<h2>{{question}}</h2>
+	<h4>
+	<form method="post">
+	  <label class="radio"><input type="radio" name="commentary" value="right">はい   </label>
+	  <label class="radio"><input type="radio" name="commentary" value="error">いいえ   </label>
+	  <br><br>
+	  <button type="submmit">解答</button>
+	</form></h4>
+</body>
+</html>

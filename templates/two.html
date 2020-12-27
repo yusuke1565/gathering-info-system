@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="/../static/style.css">
+<meta name="viewport" content="width=device-width.initial^scale=1">
+<meta charset="UTF-8">
+<title>解説文生成評価用の情報収集フォーム</title>
+</head>
+<body>
+	<!--<script type="text/javascript">
+	<!--
+	function changeDisabled(){
+		if(document.Form1["answer_extra"][0].checked){
+			document . Form1["inputAnswer"] . disable = false;
+		} else {
+			document . Form1["inputAnswer"] . disable = true;
+		}
+	}
+	window.onload = changeDisabled;
+	
+	</script>-->
+	<h5>※左上の戻るボタンは押さないでください。</h5>
+	{% autoescape false %}
+	<div><h3>{{num}}： {{english}}　({{p_id}})</h3></div>
+	{% endautoescape %}
+	<br><br><br>
+	{% if miss %}
+		<h3 style="color:#ff0000">入力にミスがありました。もう一度入力をお願いします。<br>
+		エラー -> 
+		{% for word in miss_words %}
+			{{word}}　
+		{% endfor %}
+	{% endif %}
+	</h3><hr class="a">
+	<h2>{{question}}</h2>
+	<h4>
+	<form name="Form1" method="post" autocomplete="off">
+	  <b>解答欄:
+	  <input type="text" name="answer" size="20" placeholder="下線部を修正"><br>
+	  <!--<label><input type="radio" name="answer_extra" value="input" id="input" onClick="changeDisabled()">
+	  下線部を修正する</label>：
+	  <p style="display:inline;"><input type="text" name="inputAnswer" size="10" placeholder="下線部の修正を入力"></p><br>-->
+	  <label class="radio"><input type="radio" name="answer_extra" value="del">下線部を削除する</label><br>
+	  <label class="radio"><input type="radio" name="answer_extra" value="n_know">分からない</label>
+	  <br><br>
+	  <button type="submit">解答</button>　　　
+	  <button type="reset">リセット</button>　　　
+	  <button type="button" onclick="history.back()">戻る</button>
+	</b></form></h4>
+</body>
+</html>
