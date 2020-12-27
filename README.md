@@ -9,12 +9,12 @@
 
 ### 概要
 　このシステムの大まかな流れとしては、まずユーザに英文と間違い箇所の情報を表示し、正しいと思うものを解答してもらう。続いて、先程の情報に解説文の情報をプラスし、もう一度解答してもらう。更に詳しいことは、各場面について後ほど説明するのでそちらを見てもらいたい。<br>
-![システム図解](./images/system_overview.png "システム概要の図解")
+![システム図解](./tree/master/images/system_overview.png "システム概要の図解")
 
 
 ### 入出力ファイル
-　[./input](https://github.com/yusuke1565/evaluation-system/input)に、このシステムの入力データが存在する。詳しいことは、[input/readme.md](https://github.com/yusuke1565/evaluation-system/input/readme.md)で記す。<br>
-　[./output](https://github.com/yusuke1565/evaluation-system/output)に、出力データがある。こちらも[output/readme.md](https://github.com/yusuke1565/evaluation-system/output/readme.md)を参照してもらいたい。
+　[./input](https://github.com/yusuke1565/evaluation-system/tree/master/input)に、このシステムの入力データが存在する。詳しいことは、[input/readme.md](https://github.com/yusuke1565/evaluation-system/tree/master/input/readme.md)で記す。<br>
+　[./output](https://github.com/yusuke1565/evaluation-system/tree/master/output)に、出力データがある。こちらも[output/readme.md](https://github.com/yusuke1565/evaluation-system/tree/master/output/readme.md)を参照してもらいたい。
 
 ### 実行要件
 python 3.8.5以上<br>
@@ -29,7 +29,7 @@ $ python3 app.py
 """
 と打ち込み、`Running on http://127.0.0.1:5000/`と表示されれば実行完了である。そして、[http://127.0.0.1:5000/](http://127.0.0.1:5000)にアクセスすると、./indexに飛ぶ。もしポート（:5000）が既に使用中の場合は、app.pyの一番下の`app.run`の、`port="5000"`の値を適当に変えてほしい。<br>
 　今の設定では、外部からこのシステムにアクセスできない。もし、実行中のハード以外からのアクセスを許可する場合は、app.pyの`app.run`を、
-"""bash
+"""python
 app.run(host="0.0.0.0", port="<適当な値>")
 """
 と書き換えると、外部からもアクセスできるようになる。またこの場合のURLは、`http://<実行中のPCの、wifiのIPv4アドレス>:<設定したポート番号>`となる。アクセスできる端末は、同じwifiにつながっている必要がある。
@@ -44,12 +44,12 @@ app.run(host="0.0.0.0", port="<適当な値>")
 ### ./input_userID
 　`./index`で"2回目以降"を押すと、`./input_userID`に飛ぶ。ここでは、ユーザIDを入力して開始するページである。もし存在しないIDを入力すると、エラーが返される。
 
-### ./ex/<Phase>
-　`./index`で"例題へ"を押すと、`./ex/<Phase>`に飛ぶ。<Phase>とは、このシステムの状態を6段階（one～five +end)で表したものである（例：./ex/two）。<Phase>の詳しい事については、後ほど記す。`./ex/...`は例題を出題している時を表す。
+### ./ex/...
+　`./index`で"例題へ"を押すと、`./ex/<Phase>`に飛ぶ。＜Phase＞とは、このシステムの状態を6段階（one～five +end)で表したものである（例：./ex/two）。＜Phase＞の詳しい事については、後ほど記す。`./ex/...`は例題を出題している時を表す。
 
-### ./<userID>/<Phase>/<Nunmber of problems>
- `./ready または ./input_userID`で"開始"ボタンを押すと、`./<userID>/<Phase>/<Number of problems>に飛ぶ。<userID>は、0や19といったユーザIDである。<Number of problems>は、何問目かを表す数字である。ここでは、実際に問題を出題し、情報を収集するところである。
+## 本番
+ `./ready または ./input_userID`で"開始"ボタンを押すと、情報集収の本番が始まる。URLは、`./<userID>/<Phase>/<Number of problems>`のような形になる。＜userID＞は、0や19といったユーザIDである。＜Number of problems＞は、何問目かを表す数字である。ここでは、実際に問題を出題し、情報を収集するところである。
 ***
 
 ## Phase
-　ここからは
+　ここからは,
