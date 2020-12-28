@@ -51,7 +51,7 @@ app.run(host="0.0.0.0", port="<適当な値>")
 
 ## 本番
  `./ready または ./input_userID`で"開始"ボタンを押すと、情報集収の本番が始まる。URLは、`./<userID>/<Phase>/<Number of problems>`のような形になる。＜userID＞は、0や19といったユーザIDである。＜Number of problems＞は、何問目かを表す数字である。ここでは、実際に問題を出題し、情報を収集するところである。
-***
+<hr>
 
 ## Phase
 　ここからは,Phaseについて説明していく
@@ -69,6 +69,7 @@ app.run(host="0.0.0.0", port="<適当な値>")
 
 #### five
 　Phase5は、正しいと思う語句を入力してもらう段階である。Phase2と違うのは、解説文の有無である。入力が終わると次の問題へ移行し、Phase1に戻る。
+![システム図解](./images/system_overview.png "システム概要の図解")
 
 <hr>
 ## リセット
