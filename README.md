@@ -70,6 +70,7 @@ app.run(host="0.0.0.0", port="<適当な値>")
 ![システム図解](./images/system_overview.png "システム概要の図解")
 
 <hr>
+
 ## リセット
 　今までの解答データやユーザのID情報など、すべてリセットしたい場合は、
 ```python:reset
