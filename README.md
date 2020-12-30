@@ -9,8 +9,6 @@
 
 ### 概要
 　このシステムの大まかな流れとしては、まずユーザに英文と間違い箇所の情報を表示し、正しいと思うものを解答してもらう。続いて、先程の情報に解説文の情報をプラスし、もう一度解答してもらう。更に詳しいことは、各場面について後ほど説明するのでそちらを見てもらいたい。<br>
-![システム図解](./images/system_overview.png "システム概要の図解")
-
 
 ### 入出力ファイル
 　[./input](https://github.com/yusuke1565/evaluation-system/tree/master/input)に、このシステムの入力データが存在する。詳しいことは、[input/readme.md](https://github.com/yusuke1565/evaluation-system/tree/master/input/readme.md)で記す。<br>
