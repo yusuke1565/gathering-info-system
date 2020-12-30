@@ -1,16 +1,23 @@
 import openpyxl
 import sys
+from argparse import Namespace
+
+def generate_args():
+    args = Namespace(label1="P",
+                     dataset1="../dataset/PTJ_prep.full-gen.test.best.xlsx",
+                     label2="S",
+                     dataset2="../dataset/SMK_prep.full-gen.test.best.xlsx"
+                     )
 
 def make_problem_for_probID(probID_file, make_file_name):
+    args = generate_args()
     list = []
     with open(probID_file, "r", encoding="utf-8") as f:
         for line in f:
-
-            # line = line.rsprit()
             label, ID = line.split("_")
             ID = int(ID)
-            if label == "P":
-                wb = openpyxl.load_workbook("PTJ_prep.full-gen.test.best.xlsx")
+            if label == args.label1:
+                wb = openpyxl.load_workbook(args.dataset1)
                 ws = wb.worksheets[0]
                 probID = ws.cell(ID, 1)
                 eng = ws.cell(ID, 2)
@@ -20,8 +27,8 @@ def make_problem_for_probID(probID_file, make_file_name):
                     comm.value + "\t" + position.value + "\n"
                 list.append(t)
                 wb.close()
-            elif label == "S":
-                wb = openpyxl.load_workbook("SMK_prep.full-gen.test.best.xlsx")
+            elif label == args.label2:
+                wb = openpyxl.load_workbook(args.dataset2)
                 ws = wb.worksheets[0]
                 probID = ws.cell(ID, 1)
                 eng = ws.cell(ID, 2)
