@@ -74,6 +74,6 @@ app.run(host="0.0.0.0", port="<適当な値>")
 ## リセット
 　今までの解答データやユーザのID情報など、すべてリセットしたい場合は、
 ```python:reset
-$ python3 fresh.py
+$ python3 reset.py
 ```
 と入力する。
