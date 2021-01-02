@@ -14,7 +14,7 @@ def generate_args():
                      IDnum_file="_num_file/IDnum.txt",
                      Nof_ex_prob_for_person="10",
                      ex_prob_file="ex_input/problems.tsv",
-                     ex_input_questions="ex_input/questions.tsv",
+                     ex_question_file="ex_input/questions.tsv",
                      ex_output_A="ex_output/outputA.tsv",
                      ex_output_B="ex_output/outputB.tsv",
                      max_prob="60",
@@ -225,7 +225,7 @@ def start_ex_problem():
     session["ex_count"] += 1
     n = session["ex_count"]
     ex_p = Problem(args.ex_prob_file)
-    ex_q = Question(args.ex_input_questions)
+    ex_q = Question(args.ex_question_file)
     problems= ex_p.get_problems()
     ex_p.parse_position(n-1)
     posions = ex_p.get_positions()
@@ -270,7 +270,7 @@ def contact_ex_two():
     args = generate_args()
     n = session["ex_count"]
     ex_p = Problem(args.ex_prob_file)
-    ex_q = Question(args.ex_input_questions)
+    ex_q = Question(args.ex_question_file)
     problems = ex_p.get_problems()
     ex_p.parse_position(n-1)
     posions = ex_p.get_positions()
@@ -310,7 +310,7 @@ def contact_ex_three():
     args = generate_args()
     n = session["ex_count"]
     ex_p = Problem(args.ex_prob_file)
-    ex_q = Question(args.ex_input_questions)
+    ex_q = Question(args.ex_question_file)
     problems = ex_p.get_problems()
     ex_p.parse_position(n-1)
     posions = ex_p.get_positions()
@@ -359,7 +359,7 @@ def contact_ex_four():
     args = generate_args()
     n = session["ex_count"]
     ex_p = Problem(args.ex_prob_file)
-    ex_q = Question(args.ex_input_questions)
+    ex_q = Question(args.ex_question_file)
     problems = ex_p.get_problems()
     ex_p.parse_position(n-1)
     posions = ex_p.get_positions()
@@ -408,7 +408,7 @@ def contact_ex_five():
     args = generate_args()
     n = session["ex_count"]
     ex_p = Problem(args.ex_prob_file)
-    ex_q = Question(args.ex_input_questions)
+    ex_q = Question(args.ex_question_file)
     problems = ex_p.get_problems()
     ex_p.parse_position(n-1)
     posions = ex_p.get_positions()
@@ -532,7 +532,7 @@ def contact_one(userID, Nof_prob):
     prob_file = decide_problem_file(userID)
     prob_n = int(Nof_prob) - 1
 
-    ques = Question(args.ex_input_questions)
+    ques = Question(args.input_question_file)
     prob = Problem(prob_file)
     questions = ques.get_questions()
     problems = prob.get_problems()
@@ -590,7 +590,7 @@ def contact_two(userID, Nof_prob):
     prob_file = decide_problem_file(userID)
     prob_n = int(Nof_prob) - 1
 
-    ques = Question(args.ex_input_questions)
+    ques = Question(args.input_question_file)
     prob = Problem(prob_file)
     questions = ques.get_questions()
     problems = prob.get_problems()
@@ -649,7 +649,7 @@ def contact_three(userID, Nof_prob):
     prob_file = decide_problem_file(userID)
     prob_n = int(Nof_prob) - 1
 
-    ques = Question(args.ex_input_questions)
+    ques = Question(args.input_question_file)
     prob = Problem(prob_file)
     questions = ques.get_questions()
     problems = prob.get_problems()
@@ -704,7 +704,7 @@ def contact_four(userID, Nof_prob):
     prob_file = decide_problem_file(userID)
     prob_n = int(Nof_prob) - 1
 
-    ques = Question(args.ex_input_questions)
+    ques = Question(args.input_question_file)
     prob = Problem(prob_file)
     questions = ques.get_questions()
     problems = prob.get_problems()
@@ -754,7 +754,7 @@ def contact_five(userID, Nof_prob):
     prob_file = decide_problem_file(userID)
     prob_n = int(Nof_prob) - 1
 
-    ques = Question(args.ex_input_questions)
+    ques = Question(args.input_question_file)
     prob = Problem(prob_file)
     questions = ques.get_questions()
     problems = prob.get_problems()
