@@ -24,7 +24,7 @@ def generate_args():
                      input_problems_file_B="input/probB.tsv",
                      input_problems_file_C="input/probC.tsv",
                     #input_problems_file_D="input/.....",
-                     input_question_file="input/question.tsv",
+                     input_question_file="input/questions.tsv",
                      output_before_commentary="output/not_commentary.tsv",
                      output_after_commentary="output/in_commentary.tsv")
     return args
