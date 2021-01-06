@@ -11,8 +11,9 @@
 　このシステムの大まかな流れとしては、まずユーザに英文と間違い箇所の情報を表示し、正しいと思うものを解答してもらう。続いて、先程の情報に解説文の情報をプラスし、もう一度解答してもらう。更に詳しいことは後の、Phaseについて説明しているところを見てもらいたい。<br>
 
 ### 入出力ファイル
-　[./input](https://github.com/yusuke1565/evaluation-system/tree/master/input)に、このシステムの入力データが存在する。詳しいことは、[input/readme.md](https://github.com/yusuke1565/evaluation-system/tree/master/input/readme.md)で記す。<br>
-　[./output](https://github.com/yusuke1565/evaluation-system/tree/master/output)に、出力データがある。こちらも[output/readme.md](https://github.com/yusuke1565/evaluation-system/tree/master/output/readme.md)を参照してもらいたい。
+　[./input](https://github.com/yusuke1565/gathering-info-system/tree/master/input)に、このシステムの入力データが存在する。詳しいことは、[input/readme.md](https://github.com/yusuke1565/gathering-info-system/tree/master/input/readme.md)で記す。<br>
+　[./output](https://github.com/yusuke1565/gathering-info-system/tree/master/output)に、出力データがある。こちらも[output/readme.md](https://github.com/yusuke1565/gathering-info-system/tree/master/output/readme.md)を参照してもらいたい。<br>
+　[./ex_input](https://github.com/yusuke1565/gathering-info-system/tree/master/ex_input)と[./ex_output](https://github.com/yusuke1565/gathering-info-system/tree/master/ex_output)は、例題の入力と出力情報が記されている。例題の出力情報には、しっかり入力出来ているかを確かめる為だけなので、テキストボックスに入力された情報のみ記録される。
 
 ### 実行要件
 python 3.8.5以上<br>

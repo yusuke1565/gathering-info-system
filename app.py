@@ -23,11 +23,7 @@ def generate_args():
                      input_problems_file_list="input/probA.tsv,"
                                               "input/probB.tsv,"
                                               "input/probC.tsv",
-                     input_problems_file_A="input/probA.tsv",
-                     input_problems_file_B="input/probB.tsv",
-                     input_problems_file_C="input/probC.tsv",
-                    #input_problems_file_D="input/probD.tsv",
-                    # If you add group, edit "decide_problem_file".
+                                             #"input/probD.tsv",
                      input_question_file="input/questions.tsv",
                      output_before_commentary="output/not_commentary.tsv",
                      output_after_commentary="output/in_commentary.tsv")

@@ -19,4 +19,4 @@
 ### probA, probB, probC
 　このディレクトリには、"prob.tsv"ではなく、A,B,Cと分かれている。これは、グループによって問題を分ける為に行っている。
 　グループの分け方は、ユーザIDによって決まる。0～5がA、6～11がB、12～17がCとなる。18からAに戻り、6間隔で切り替わる。
-　グループの数や人数の変更は、"app.py"の"Namespace"の、"Nof_groups"と"Nof_people_in_group"の値を変える事でできる。"Nof_groups"はグループの数である。"Nof_people_in_group"は、１グループの人数である。しかし、"Nof_groups"を増やした場合、"app.py"の
+　グループの数や人数の変更は、"app.py"の"Namespace"の、"Nof_groups"と"Nof_people_in_group"の値を変える事でできる。"Nof_groups"はグループの数である。"Nof_people_in_group"は、１グループの人数である。しかし、"Nof_groups"を増やした場合、"Namespace"の"input_problems_file_list"に、ファイルへのパスを追加する必要がある。（上から順番に出題される。)
