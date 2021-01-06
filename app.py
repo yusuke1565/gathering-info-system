@@ -20,10 +20,14 @@ def generate_args():
                      max_prob="60",
                      Nof_people_in_group=6,
                      Nof_groups=3,
+                     input_problems_file_list="input/probA.tsv,"
+                                              "input/probB.tsv,"
+                                              "input/probC.tsv",
                      input_problems_file_A="input/probA.tsv",
                      input_problems_file_B="input/probB.tsv",
                      input_problems_file_C="input/probC.tsv",
-                    #input_problems_file_D="input/.....",
+                    #input_problems_file_D="input/probD.tsv",
+                    # If you add group, edit "decide_problem_file".
                      input_question_file="input/questions.tsv",
                      output_before_commentary="output/not_commentary.tsv",
                      output_after_commentary="output/in_commentary.tsv")
@@ -183,12 +187,21 @@ def decide_problem_file(userID):
         else:
             break
     file = None
-    if int(n) == 0:
-        file = args.input_problems_file_A
-    elif int(n) == 1:
-        file = args.input_problems_file_B
-    elif int(n) == 2:
-        file = args.input_problems_file_C
+
+    if file:
+        if int(n) == 0:
+            file = args.input_problems_file_A
+        elif int(n) == 1:
+            file = args.input_problems_file_B
+        elif int(n) == 2:
+            file = args.input_problems_file_C
+    else:
+        file_list = args.input_problems_file_list.split(",")
+        for i, path in enumerate(file_list):
+            if i == int(n):
+                file = path
+    # elif int(n) == 3:
+        #  file = args.input_problems_file_D
     return file
 
 
