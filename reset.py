@@ -1,12 +1,12 @@
-with open("_num_file/start_position_prob.txt",
+with open("num_file/start_position_prob.txt",
           "w", encoding="utf-8") as f:
     f.write("")
 
-with open("_num_file/of_times.txt",
+with open("num_file/of_times.txt",
           "w", encoding="utf-8") as f:
     f.write("")
 
-with open("_num_file/IDnum.txt", "w",
+with open("num_file/IDnum.txt", "w",
           encoding="utf-8") as f:
     f.write("0")
 
