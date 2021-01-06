@@ -9,9 +9,9 @@ d = enchant.Dict("en_US")
 
 def generate_args():
     args = Namespace(position_target="w",  # "w"=word, "t"=text.
-                     number_of_times_file="_num_file/of_times.txt",
-                     start_position_file="_num_file/start_position_prob.txt",
-                     IDnum_file="_num_file/IDnum.txt",
+                     number_of_times_file="num_file/of_times.txt",
+                     start_position_file="num_file/start_position_prob.txt",
+                     IDnum_file="num_file/IDnum.txt",
                      Nof_ex_prob_for_person="10",
                      ex_prob_file="ex_input/problems.tsv",
                      ex_question_file="ex_input/questions.tsv",
