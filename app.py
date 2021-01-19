@@ -112,27 +112,43 @@ def load_userID(num_file):
 
 
 def write_start_position(file):
+    """
+    Write new start position. If new user, contact this function.
+    """
     with open(file, "a", encoding="utf-8") as f:
         f.write("0\n")
 
 
 def load_start_position(file, userID) :
+    """
+    Return number to start position.
+    :param file(str): Name of "start position file".
+    :param userID(int or str): UserID.
+    :return
+    start_position(str): Number of problem to start.
+    """
     with open(file, "r", encoding="utf-8") as f:
         for i, num in enumerate(f):
             if i == int(userID):
                 num = num.rstrip()
-                position = num
+                start_position = num
                 break
-    return position
+    return start_position
 
 
-def rewrite_start_position(file, userID, prob_num):
+def rewrite_start_position(file, userID, Nof_prob):
+    """
+    Rewrite start position of the user.
+    :param file(str): Name of "start position file".
+    :param userID(int or str): UserID.
+    :param Nof_prob(int or str): Number the user finished number of problems.
+    """
     start_positions = []
     with open(file, "r", encoding="utf-8") as f:
         for i, num in enumerate(f):
             num = num.rstrip()
             if i == int(userID):
-                num = prob_num
+                num = str(Nof_prob)
             start_positions.append(num)
     with open(file, "w", encoding="utf-8") as f:
         for num in start_positions:
@@ -140,6 +156,13 @@ def rewrite_start_position(file, userID, prob_num):
 
 
 def check_word(text="I am man."):
+    """
+    Check spelling of word.
+    :param text(str): sentence in english.
+    :return
+    miss(boolean): If there is miss , "miss" is True.
+    miss_words(list): List of words are in spelling miss.
+    """
     miss = False
     miss_words = []
     words = text.split(" ")
@@ -184,20 +207,10 @@ def decide_problem_file(userID):
             break
     file = None
 
-    if file:
-        if int(n) == 0:
-            file = args.input_problems_file_A
-        elif int(n) == 1:
-            file = args.input_problems_file_B
-        elif int(n) == 2:
-            file = args.input_problems_file_C
-    else:
-        file_list = args.input_problems_file_list.split(",")
-        for i, path in enumerate(file_list):
-            if i == int(n):
-                file = path
-    # elif int(n) == 3:
-        #  file = args.input_problems_file_D
+    file_list = args.input_problems_file_list.split(",")
+    for i, path in enumerate(file_list):
+        if i == int(n):
+            file = path
     return file
 
 
