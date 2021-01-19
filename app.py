@@ -12,7 +12,7 @@ def generate_args():
                      number_of_times_file="num_file/of_times.txt",
                      start_position_file="num_file/start_position_prob.txt",
                      IDnum_file="num_file/IDnum.txt",
-                     Nof_ex_prob_for_person="10",
+                     Nof_ex_prob_for_person="5",
                      ex_prob_file="ex_input/problems.tsv",
                      ex_question_file="ex_input/questions.tsv",
                      ex_output_A="ex_output/outputA.tsv",
