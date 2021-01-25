@@ -12,16 +12,16 @@ with open("num_file/IDnum.txt", "w",
 
 with open("ex_output/outputA.tsv", "w",
           encoding="utf-8") as f:
-    f.write("ID\tNof_times\tprob_num\tenglish\tanswer\textra\n")
+    f.write("ID\tNof_times\tprob_ID\tenglish\tanswer\textra\n")
 
 with open("ex_output/outputB.tsv", "w",
           encoding="utf-8") as f:
-    f.write("ID\tNof_times\tprob_num\tcommentary\tenglish\tanswer\textra\n")
+    f.write("ID\tNof_times\tprob_ID\tcommentary\tenglish\tanswer\textra\n")
 
 with open("output/not_commentary.tsv", "w",
           encoding="utf-8") as f:
-    f.write("ID\tNof_times\tprob_num\tenglish\tanswer\textra\n")
+    f.write("ID\tNof_times\tprob_ID\tenglish\tanswer\textra\n")
 
 with open("output/in_commentary.tsv", "w",
           encoding="utf-8") as f:
-    f.write("ID\tNof_times\tprob_num\tcommentary\tenglish\tanswer\textra\n")
+    f.write("ID\tNof_times\tprob_ID\tcommentary\tenglish\tanswer\textra\n")
