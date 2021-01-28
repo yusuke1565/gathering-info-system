@@ -205,8 +205,8 @@ def decide_problem_file(userID):
             n = n - args.Nof_groups
         else:
             break
-    file = None
 
+    file = None
     file_list = args.input_problems_file_list.split(",")
     for i, path in enumerate(file_list):
         if i == int(n):
@@ -244,19 +244,23 @@ def start_ex_problem():
     question(str): Sentence asking user "Is there error in english.
     """
     args = generate_args()
+    session["miss"] = False
+    session["miss_words"] = None
     session["ex_count"] += 1
     n = session["ex_count"]
     ex_p = Problem(args.ex_prob_file)
     ex_q = Question(args.ex_question_file)
     problems= ex_p.get_problems()
     ex_p.parse_position(n-1)
-    posions = ex_p.get_positions()
+    positions = ex_p.get_positions()
     questions = ex_q.get_questions()
     p_id = problems[n-1][0]
     english = problems[n-1][1]
-    english = add_under(english, posions, "w")
+    english = add_under(english, positions, "w")
     question = questions[0]
-    id = 1234
+    id = None
+    if n == 1:
+        id = 1234
     num = "例題" + str(n)
     return render_template("one.html",
                            english=english,
@@ -302,22 +306,31 @@ def contact_ex_two():
     english = problems[n-1][1]
     english = add_under(english, posions, "w")
     num = "例題" + str(n)
+    miss = session["miss"]
+    miss_words = session["miss_words"]
     return render_template("two.html",
                            english=english,
                            num=num,
                            p_id=p_id,
-                           question=question)
+                           question=question,
+                           miss=miss,
+                           miss_words=miss_words)
 
 
 @app.route("/ex/two", methods=["POST"])
 def post_ex_two():
     args = generate_args()
     answer = request.form.get("answer")
-    n = session["ex_count"] - 1
-    with open(args.ex_output_A, "a", encoding="utf-8") as f:
-        f.write(str(n))
-        f.write("\t" + answer + "\n")
-    url = "/ex/three"
+    if answer:
+        session["miss"], session["miss_words"] = check_word(answer)
+    if session["miss"]:
+        url = "/ex/two"
+    else:
+        n = session["ex_count"] - 1
+        with open(args.ex_output_A, "a", encoding="utf-8") as f:
+            f.write(str(n))
+            f.write("\t" + answer + "\n")
+        url = "/ex/three"
     return redirect(url)
 
 
@@ -335,12 +348,12 @@ def contact_ex_three():
     ex_q = Question(args.ex_question_file)
     problems = ex_p.get_problems()
     ex_p.parse_position(n-1)
-    posions = ex_p.get_positions()
+    positions = ex_p.get_positions()
     questions = ex_q.get_questions()
     question = questions[2]
     p_id = problems[n-1][0]
     english = problems[n-1][1]
-    english = add_under(english, posions, "w")
+    english = add_under(english, positions, "w")
     comm = problems[n-1][2]
     num = "例題" + str(n)
     return render_template("three.html",
@@ -379,17 +392,19 @@ def contact_ex_four():
     All same as phase three.
     """
     args = generate_args()
+    session["miss"] = False
+    session["miss_words"] = None
     n = session["ex_count"]
     ex_p = Problem(args.ex_prob_file)
     ex_q = Question(args.ex_question_file)
     problems = ex_p.get_problems()
     ex_p.parse_position(n-1)
-    posions = ex_p.get_positions()
+    positions = ex_p.get_positions()
     questions = ex_q.get_questions()
     question = questions[3]
     p_id = problems[n-1][0]
     english = problems[n-1][1]
-    english = add_under(english, posions, "w")
+    english = add_under(english, positions, "w")
     comm = problems[n-1][2]
     num = "例題" + str(n)
     return render_template("four.html",
@@ -433,20 +448,24 @@ def contact_ex_five():
     ex_q = Question(args.ex_question_file)
     problems = ex_p.get_problems()
     ex_p.parse_position(n-1)
-    posions = ex_p.get_positions()
+    positions = ex_p.get_positions()
     questions = ex_q.get_questions()
     question = questions[4]
     p_id = problems[n-1][0]
     english = problems[n-1][1]
-    english = add_under(english, posions, "w")
+    english = add_under(english, positions, "w")
     comm = problems[n-1][2]
     num = "例題" + str(n)
+    miss = session["miss"]
+    miss_words = session["miss_words"]
     return render_template("five.html",
                            english=english,
                            num=num,
                            p_id=p_id,
                            question=question,
-                           commentary=comm)
+                           commentary=comm,
+                           miss=miss,
+                           miss_words=miss_words)
 
 
 @app.route("/ex/five", methods=["POST"])
@@ -458,13 +477,19 @@ def post_ex_five():
     """
     args = generate_args()
     answer = request.form.get("answer")
-    n = session["ex_count"] - 1
-    with open(args.ex_output_B, "a", encoding="utf-8") as f:
-        f.write(str(n))
-        f.write("\t" + answer + "\n")
-    if session["ex_count"] == int(args.Nof_ex_prob_for_person):
-        return redirect("/ex/end")
-    return redirect("/ex/one")
+    if answer:
+        session["miss"], session["miss_words"] = check_word(answer)
+    if session["miss"]:
+        url = "ex/five"
+        return redirect(url)
+    else:
+        n = session["ex_count"] - 1
+        with open(args.ex_output_B, "a", encoding="utf-8") as f:
+            f.write(str(n))
+            f.write("\t" + answer + "\n")
+        if session["ex_count"] == int(args.Nof_ex_prob_for_person):
+            return redirect("/ex/end")
+        return redirect("/ex/one")
 
 
 @app.route("/ex/end")
