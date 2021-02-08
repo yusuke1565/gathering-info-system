@@ -40,27 +40,27 @@ app.run(host="0.0.0.0", port="<適当な値>")
 　ここからは、各ページの説明を行う。<br>
 　ホームでは、"初めて","2回目以降","例題"、という3つのボタンがある。初めて情報収集に協力してもらう場合は、"初めて"。それ以外は、"2回目以降"。例題を実行する場合は、"例題へ"を押す。
 
-![ホーム画面](./images/sys_home.png)
+<img src="./images/sys_home.png" width="400px">
 
 ### 初めて
 　ホームで"初めて"を押すと、準備画面に飛ぶ。ここでは、特に動きはなく、"開始"ボタンを押して開始するか、ホームに"戻る"ボタンがある。開始前の準備ページである。"開始"ボタンを押すと、ユーザIDが割り振られる。
 
-![準備画面](./images/sys_new.png)
+<img src="./images/sys_new.png" width="400px">
 
 ### 2回目以降
 　ホームで"2回目以降"を押すと、ID入力画面に飛ぶ。ここでは、ユーザIDを入力して開始するページである。もし存在しないIDを入力すると、エラーが返される。
 
-![ID入力画面](./images/sys_second.png)
+<img src="./images/sys_second.png" width="400px">
 
 ### 例題
 　ホームで"例題へ"を押すと、5問の例題が出題される。動きは本番と同じ動きであり、画面の見方や操作に慣れてもらうために行う。<br>
 　URLは`/ex/＜Phase＞`となる。＜Phase＞とは、このシステムの状態を6段階（one～five +end)で表したものである（例：/ex/two）。＜Phase＞の詳しい事については、後ほど記す。`/ex/...`は例題を出題している時を表す。
 
-![例題開始画面](./images/sys_exstart.png)
-<br>
+<img src="./images/sys_exstart.png" width="400px">
+<br><br>
 　例題5問が終了すると、ホームに戻る用のボタンがある。
 
-![例題終了画面](./images/sys_exend.png)
+<img src="./images/sys_exend.png" width="400px">
 
 ## スタート
  準備画面または、ID入力画面で"開始"ボタンを押すと、情報集収の本番が始まる。URLは、`/<userID>/<Phase>/<Number of problems>`のような形になる。＜userID＞は、0や19といったユーザIDである。＜Number of problems＞は、何問目かを表す数字である。ここでは、実際に問題を出題し、情報を収集するところである。
@@ -82,7 +82,8 @@ app.run(host="0.0.0.0", port="<適当な値>")
 
 #### five
 　Phase5は、正しいと思う語句を入力してもらう段階である。Phase2と違うのは、解説文の有無である。入力が終わると次の問題へ移行し、Phase1に戻る。
-![システム図解](./images/system_overview.png "システム概要の図解")
+
+<img src="./images/system_overview.png" width="450px">
 
 <hr>
 
