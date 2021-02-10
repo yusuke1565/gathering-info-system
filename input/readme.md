@@ -4,7 +4,7 @@
 ### question.tsv
 　このファイルには、ユーザに問いかける内容を記している。中身は、
 ```bash:question.tsv
-<Phase1のquestion>\t<Phase2のquestion>\t<Phase3のquestion>\t<Phase4のquestion>\t<Phase5のquestion>\n
+<Phase1のquestion> \t <Phase2のquestion> \t <Phase3のquestion> \t <Phase4のquestion> \t <Phase5のquestion>
 ```
 の一文となっている。
 

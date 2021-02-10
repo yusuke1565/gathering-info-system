@@ -10,7 +10,7 @@ d = enchant.Dict("en_US")
 def generate_args():
     args = Namespace(position_target="w",  # "w"=word, "t"=text.
                      number_of_times_file="num_file/of_times.txt",
-                     start_position_file="num_file/start_position_prob.txt",
+                     problem_start_position_file="num_file/problem_start_position.txt",
                      IDnum_file="num_file/IDnum.txt",
                      Nof_ex_prob_for_person="5",
                      ex_prob_file="ex_input/problems.tsv",
@@ -66,7 +66,6 @@ class Problem:
 # -----------------------------------------------#
     def load_file(self, file):
         self.problems = []
-        self.positions = []
         with open(file, "r", encoding="UTF-8") as f:
             for line in f:
                 line = line.rstrip()
@@ -80,82 +79,70 @@ class Problem:
         """
         return self.problems
 
-    def parse_position(self, problem_num):
-        """
-        Parse position object and make positions.
-        :param problem_num(str): Problem number
-        :return:
-        positions(str) : position<"2:5"> -> positions<[2,5]>
-        """
-        position = self.problems[problem_num][3]
-        self.positions = position.split(":")
 
-    def get_positions(self):
-        return self.positions
-
-
-def load_userID(num_file):
+def load_userID(file):
     """
     Load to labeling number.
     num_file(text): It is ".txt" file written labelling number.
     return: number(int):Labeling number.
     """
-    with open(num_file, "r", encoding="utf-8") as f:
+    with open(file, "r", encoding="utf-8") as f:
         r_num = f.readline()
         r_num = r_num.rstrip()
         userID = int(r_num)
 
-    with open(num_file, "w", encoding="utf-8") as f:
+    with open(file, "w", encoding="utf-8") as f:
         w_num = userID + 1
         f.write(str(w_num))
     return userID
 
 
-def write_start_position(file):
+def write_problem_start_position(file):
     """
     Write new start position. If new user, contact this function.
     """
     with open(file, "a", encoding="utf-8") as f:
-        f.write("0\n")
+        f.write("1\n")
 
 
-def load_start_position(file, userID) :
+def load_problem_start_position(file, userID) :
     """
     Return number to start position.
     :param file(str): Name of "start position file".
     :param userID(int or str): UserID.
     :return
-    start_position(str): Number of problem to start.
+    problem_start_position(str): Number of problem to start.
     """
     with open(file, "r", encoding="utf-8") as f:
         for i, num in enumerate(f):
             if i == int(userID):
                 num = num.rstrip()
-                start_position = num
+                problem_start_position = num
                 break
-    return start_position
+    return problem_start_position
 
 
-def rewrite_start_position(file, userID, Nof_prob):
+def rewrite_problem_start_position(file, userID, Nof_prob):
     """
     Rewrite start position of the user.
     :param file(str): Name of "start position file".
     :param userID(int or str): UserID.
     :param Nof_prob(int or str): Number the user finished number of problems.
     """
-    start_positions = []
+    problem_start_positions = []
     with open(file, "r", encoding="utf-8") as f:
         for i, num in enumerate(f):
             num = num.rstrip()
             if i == int(userID):
+                Nof_prob = int(Nof_prob) + 1
                 num = str(Nof_prob)
-            start_positions.append(num)
+            problem_start_positions.append(num)
     with open(file, "w", encoding="utf-8") as f:
-        for num in start_positions:
+        for num in problem_start_positions:
             f.write(num + "\n")
 
 
-def check_word(text="I am man."):
+def check_word(phrase="I am man."):
     """
     Check spelling of word.
     :param text(str): sentence in english.
@@ -165,7 +152,7 @@ def check_word(text="I am man."):
     """
     miss = False
     miss_words = []
-    words = text.split(" ")
+    words = phrase.split(" ")
     for word in words:
         if d.check(word) is False:
             miss = True
@@ -173,20 +160,25 @@ def check_word(text="I am man."):
     return miss, miss_words
 
 
-def add_under(english, positions, target="w"):
+def add_under(sentence, position, target="w"):
     """
     Add under line in english.
     :param english(str): sentence in english.
-    :param positions(list): number for position adding under line.
+    :param position(str): number for position adding under line.
+                          "x:y". "x" is adding start position,
+                          "y" is adding finish position.
     :param target(str): 'w'= per word, or 't'= per text.
     :return:
     english added under line.
     """
-    english = english.strip()
+    positions = position.split(":")
+    sentence = sentence.strip()
     if "w" in target:
-        english = english.split(" ")
+        words = sentence.split(" ")
+    else:
+        words = sentence
     eng = ""
-    for i, word in enumerate(english):
+    for i, word in enumerate(words):
         if i == int(positions[0]):
             eng = eng + "<span class='under'>"
         eng = eng + word
@@ -251,12 +243,11 @@ def start_ex_problem():
     ex_p = Problem(args.ex_prob_file)
     ex_q = Question(args.ex_question_file)
     problems= ex_p.get_problems()
-    ex_p.parse_position(n-1)
-    positions = ex_p.get_positions()
+    position = problems[n-1][3]
     questions = ex_q.get_questions()
     p_id = problems[n-1][0]
     english = problems[n-1][1]
-    english = add_under(english, positions, "w")
+    english = add_under(english, position, "w")
     question = questions[0]
     id = None
     if n == 1:
@@ -298,13 +289,12 @@ def contact_ex_two():
     ex_p = Problem(args.ex_prob_file)
     ex_q = Question(args.ex_question_file)
     problems = ex_p.get_problems()
-    ex_p.parse_position(n-1)
-    posions = ex_p.get_positions()
+    position = problems[n-1][3]
     questions = ex_q.get_questions()
     question = questions[1]
     p_id = problems[n-1][0]
     english = problems[n-1][1]
-    english = add_under(english, posions, "w")
+    english = add_under(english, position, "w")
     num = "例題" + str(n)
     miss = session["miss"]
     miss_words = session["miss_words"]
@@ -347,13 +337,12 @@ def contact_ex_three():
     ex_p = Problem(args.ex_prob_file)
     ex_q = Question(args.ex_question_file)
     problems = ex_p.get_problems()
-    ex_p.parse_position(n-1)
-    positions = ex_p.get_positions()
+    position = problems[n-1][3]
     questions = ex_q.get_questions()
     question = questions[2]
     p_id = problems[n-1][0]
     english = problems[n-1][1]
-    english = add_under(english, positions, "w")
+    english = add_under(english, position, "w")
     comm = problems[n-1][2]
     num = "例題" + str(n)
     return render_template("three.html",
@@ -398,13 +387,12 @@ def contact_ex_four():
     ex_p = Problem(args.ex_prob_file)
     ex_q = Question(args.ex_question_file)
     problems = ex_p.get_problems()
-    ex_p.parse_position(n-1)
-    positions = ex_p.get_positions()
+    position = problems[n-1][3]
     questions = ex_q.get_questions()
     question = questions[3]
     p_id = problems[n-1][0]
     english = problems[n-1][1]
-    english = add_under(english, positions, "w")
+    english = add_under(english, position, "w")
     comm = problems[n-1][2]
     num = "例題" + str(n)
     return render_template("four.html",
@@ -447,13 +435,12 @@ def contact_ex_five():
     ex_p = Problem(args.ex_prob_file)
     ex_q = Question(args.ex_question_file)
     problems = ex_p.get_problems()
-    ex_p.parse_position(n-1)
-    positions = ex_p.get_positions()
+    position = problems[n-1][3]
     questions = ex_q.get_questions()
     question = questions[4]
     p_id = problems[n-1][0]
     english = problems[n-1][1]
-    english = add_under(english, positions, "w")
+    english = add_under(english, position, "w")
     comm = problems[n-1][2]
     num = "例題" + str(n)
     miss = session["miss"]
@@ -510,14 +497,14 @@ def contact_ready():
 @app.route("/get_userID")
 def get_newID():
     """
-    Get new userID and start_position, and rewrite (number_of_times_file).
+    Get new userID and problem_start_position, and rewrite (number_of_times_file).
     :return:
     url(str): Same.
     """
     args = generate_args()
     userID = load_userID(args.IDnum_file)
     session["times"] = 1
-    write_start_position(args.start_position_file)
+    write_problem_start_position(args.problem_start_position_file)
     with open(args.number_of_times_file, "a") as f:
         f.write("1\n")
     url = str(userID) + "/one/1"
@@ -554,10 +541,9 @@ def post_userID():
             f.write(num + "\n")
 
     session["times"] = times
-    start_position = \
-        load_start_position(args.start_position_file, userID)
-    prob_num = int(start_position) + 1
-    url = userID + "/one/" + str(prob_num)
+    problem_start_position = \
+        load_problem_start_position(args.problem_start_position_file, userID)
+    url = userID + "/one/" + str(problem_start_position)
     return redirect(url)
 
 
@@ -583,8 +569,6 @@ def contact_one(userID, Nof_prob):
     prob = Problem(prob_file)
     questions = ques.get_questions()
     problems = prob.get_problems()
-    prob.parse_position(prob_n)
-    positions = prob.get_positions()
 
     id = None
     if Nof_prob == "1":
@@ -593,8 +577,9 @@ def contact_one(userID, Nof_prob):
     num = Nof_prob + "問目"
     p_id = problems[prob_n][0]
     session["label_num"] = p_id
+    position = problems[prob_n][3]
     english = problems[prob_n][1]
-    english = add_under(english, positions, args.position_target)
+    english = add_under(english, position, args.position_target)
     return render_template("one.html",
                            p_id=p_id,
                            id=id,
@@ -641,8 +626,6 @@ def contact_two(userID, Nof_prob):
     prob = Problem(prob_file)
     questions = ques.get_questions()
     problems = prob.get_problems()
-    prob.parse_position(prob_n)
-    positions = prob.get_positions()
 
     miss = session.get("miss", False)
     miss_words = session.get("miss_words", None)
@@ -650,8 +633,9 @@ def contact_two(userID, Nof_prob):
     question = questions[1]
     num = Nof_prob + "問目"
     p_id = problems[prob_n][0]
+    position = problems[prob_n][3]
     english = problems[prob_n][1]
-    english = add_under(english, positions, args.position_target)
+    english = add_under(english, position, args.position_target)
     return render_template("two.html",
                            question=question,
                            english=english,
@@ -700,14 +684,13 @@ def contact_three(userID, Nof_prob):
     prob = Problem(prob_file)
     questions = ques.get_questions()
     problems = prob.get_problems()
-    prob.parse_position(prob_n)
-    positions = prob.get_positions()
 
     question = questions[2]
     num = Nof_prob + "問目"
     p_id = problems[prob_n][0]
+    position = problems[prob_n][3]
     english = problems[prob_n][1]
-    english = add_under(english, positions, args.position_target)
+    english = add_under(english, position, args.position_target)
     commentary = problems[prob_n][2]
     return render_template("three.html",
                            question=question,
@@ -734,7 +717,7 @@ def post_three(userID, Nof_prob):
             else:
                 Nof_prob_int = int(Nof_prob) + 1
                 url = "/" + userID + "/one/" + str(Nof_prob_int)
-                rewrite_start_position(args.start_position_file,
+                rewrite_problem_start_position(args.problem_start_position_file,
                                        userID, Nof_prob)
         else:
             url = "/" + userID + "/four/" + Nof_prob
@@ -755,14 +738,13 @@ def contact_four(userID, Nof_prob):
     prob = Problem(prob_file)
     questions = ques.get_questions()
     problems = prob.get_problems()
-    prob.parse_position(prob_n)
-    positions = prob.get_positions()
 
     question = questions[3]
     num = Nof_prob + "問目"
     p_id = problems[prob_n][0]
+    position = problems[prob_n][3]
     english = problems[prob_n][1]
-    english = add_under(english, positions, args.position_target)
+    english = add_under(english, position, args.position_target)
     commentary = problems[prob_n][2]
     return render_template("four.html",
                            question=question,
@@ -785,7 +767,7 @@ def post_four(userID, Nof_prob):
                 f.write(userID + "\t" + times + "\t" + session["label_num"] +
                         "\tright\t" + str(judge) + "\tNone\tNone\n"
                         )
-            rewrite_start_position(args.start_position_file, userID, Nof_prob)
+            rewrite_problem_start_position(args.problem_start_position_file, userID, Nof_prob)
             if Nof_prob == args.max_prob:
                 url = "/end"
             else:
@@ -805,8 +787,6 @@ def contact_five(userID, Nof_prob):
     prob = Problem(prob_file)
     questions = ques.get_questions()
     problems = prob.get_problems()
-    prob.parse_position(prob_n)
-    positions = prob.get_positions()
 
     miss = session.get("miss", False)
     miss_words = session.get("miss_words", None)
@@ -814,8 +794,9 @@ def contact_five(userID, Nof_prob):
     question = questions[4]
     num = Nof_prob + "問目"
     p_id = problems[prob_n][0]
+    position = problems[prob_n][3]
     english = problems[prob_n][1]
-    english = add_under(english, positions, args.position_target)
+    english = add_under(english, position, args.position_target)
     commentary = problems[prob_n][2]
     return render_template("five.html",
                            question=question,
@@ -844,7 +825,7 @@ def post_five(userID, Nof_prob):
                 "\tright\terror\t" + str(answer) +
                 "\t" + str(answer_extra) + "\n"
                 )
-    rewrite_start_position(args.start_position_file, userID, Nof_prob)
+    rewrite_problem_start_position(args.problem_start_position_file, userID, Nof_prob)
     if Nof_prob == args.max_prob:
         url = "/end"
     else:

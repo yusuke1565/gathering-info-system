@@ -1,4 +1,4 @@
-with open("num_file/start_position_prob.txt",
+with open("num_file/problem_start_position.txt",
           "w", encoding="utf-8") as f:
     f.write("")
 
