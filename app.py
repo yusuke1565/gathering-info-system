@@ -23,7 +23,7 @@ def generate_args():
                      input_problems_file_list="input/probA.tsv,"
                                               "input/probB.tsv,"
                                               "input/probC.tsv",
-                                             #"input/probD.tsv",
+                                            # "input/probD.tsv",
                      input_question_file="input/questions.tsv",
                      output_before_commentary="output/not_commentary.tsv",
                      output_after_commentary="output/in_commentary.tsv")
@@ -105,7 +105,7 @@ def write_problem_start_position(file):
         f.write("1\n")
 
 
-def load_problem_start_position(file, userID) :
+def load_problem_start_position(file, userID):
     """
     Return number to start position.
     :param file(str): Name of "start position file".
@@ -242,7 +242,7 @@ def start_ex_problem():
     n = session["ex_count"]
     ex_p = Problem(args.ex_prob_file)
     ex_q = Question(args.ex_question_file)
-    problems= ex_p.get_problems()
+    problems = ex_p.get_problems()
     position = problems[n-1][3]
     questions = ex_q.get_questions()
     p_id = problems[n-1][0]
@@ -497,7 +497,8 @@ def contact_ready():
 @app.route("/get_userID")
 def get_newID():
     """
-    Get new userID and problem_start_position, and rewrite (number_of_times_file).
+    Get new userID and problem_start_position,
+    and rewrite (number_of_times_file).
     :return:
     url(str): Same.
     """
@@ -601,10 +602,10 @@ def post_one(userID, Nof_prob):
             url = "/" + userID + "/two/" + Nof_prob
         else:
             times = str(session["times"])
-            with open(args.output_before_commentary, "a", encoding="UTF-8") as f:
+            with open(args.output_before_commentary,
+                      "a", encoding="UTF-8") as f:
                 f.write(userID + "\t" + times + "\t" +
-                        session["label_num"] + "\t" + judge + "\tNone\tNone\n"
-                        )
+                        session["label_num"] + "\t" + judge + "\tNone\tNone\n")
             url = "/" + userID + "/three/" + Nof_prob
     else:
         url = "/" + userID + "/one/" + Nof_prob
@@ -666,8 +667,7 @@ def post_two(userID, Nof_prob):
     times = str(session["times"])
     with open(args.output_before_commentary, "a", encoding="UTF-8") as f:
         f.write(userID + "\t" + times + "\t" + session["label_num"] +
-                "\terror\t" + str(answer) + "\t" + str(answer_extra) + "\n"
-                )
+                "\terror\t" + str(answer) + "\t" + str(answer_extra) + "\n")
     url = "/" + userID + "/three/" + Nof_prob
     return redirect(url)
 
@@ -707,7 +707,8 @@ def post_three(userID, Nof_prob):
     if ans_comm:
         if ans_comm in "error":
             times = str(session["times"])
-            with open(args.output_after_commentary, "a", encoding="UTF-8") as f:
+            with open(args.output_after_commentary,
+                      "a", encoding="UTF-8") as f:
                 f.write(userID + "\t" + times + "\t" +
                         session["label_num"] + "\terror\tNone\tNone\tNone\n"
                         )
@@ -717,8 +718,8 @@ def post_three(userID, Nof_prob):
             else:
                 Nof_prob_int = int(Nof_prob) + 1
                 url = "/" + userID + "/one/" + str(Nof_prob_int)
-                rewrite_problem_start_position(args.problem_start_position_file,
-                                       userID, Nof_prob)
+                rewrite_problem_start_position(
+                    args.problem_start_position_file, userID, Nof_prob)
         else:
             url = "/" + userID + "/four/" + Nof_prob
     else:
@@ -763,11 +764,13 @@ def post_four(userID, Nof_prob):
             url = "/" + userID + "/five/" + Nof_prob
         else:
             times = str(session["times"])
-            with open(args.output_after_commentary, "a", encoding="UTF-8") as f:
+            with open(args.output_after_commentary,
+                      "a", encoding="UTF-8") as f:
                 f.write(userID + "\t" + times + "\t" + session["label_num"] +
                         "\tright\t" + str(judge) + "\tNone\tNone\n"
                         )
-            rewrite_problem_start_position(args.problem_start_position_file, userID, Nof_prob)
+            rewrite_problem_start_position(
+                args.problem_start_position_file, userID, Nof_prob)
             if Nof_prob == args.max_prob:
                 url = "/end"
             else:
@@ -776,6 +779,7 @@ def post_four(userID, Nof_prob):
     else:
         url = "/" + userID + "/four/" + Nof_prob
     return redirect(url)
+
 
 @app.route("/<userID>/five/<Nof_prob>", methods=["GET"])
 def contact_five(userID, Nof_prob):
@@ -825,7 +829,8 @@ def post_five(userID, Nof_prob):
                 "\tright\terror\t" + str(answer) +
                 "\t" + str(answer_extra) + "\n"
                 )
-    rewrite_problem_start_position(args.problem_start_position_file, userID, Nof_prob)
+    rewrite_problem_start_position(
+        args.problem_start_position_file, userID, Nof_prob)
     if Nof_prob == args.max_prob:
         url = "/end"
     else:
